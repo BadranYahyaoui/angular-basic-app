@@ -48,15 +48,7 @@ export class ProductsComponent implements OnInit {
       "imageUrl": "http://openclipart.org/image/300px/svg_to_png/58471/garden_cart.png"
     }];
 
-  toggleImage():void{
-    this.showImage=!this.showImage;
-  }
-  performFilter(filterdBy:string):IProduct[]{
-    filterdBy=filterdBy.toLocaleLowerCase();
-      return this.products.filter((product:IProduct)=>
-             product.productName.toLocaleLowerCase().indexOf(filterdBy)!==-1
-      );
-  }
+
 
   constructor() {
     // this.filteredProducts=this.products
@@ -66,6 +58,18 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     console.log('init product component')
   }
+  toggleImage():void{
+    this.showImage=!this.showImage;
+  }
+  performFilter(filterdBy:string):IProduct[]{
+    filterdBy=filterdBy.toLocaleLowerCase();
+    return this.products.filter((product:IProduct)=>
+      product.productName.toLocaleLowerCase().indexOf(filterdBy)!==-1
+    );
+  }
 
+  onRatingClicked(message:string){
+    this.pageTitle='Product List '+message;
+  }
 
 }
