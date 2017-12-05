@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IProduct} from "./product";
+import {ProductService} from "./product.service";
 
 @Component({
-  selector: 'badran-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
 
 
-  pageTitle:string ="Product list" ;
-  imageWidth : number=50;
-  imageMargin : number=2;
-  showImage : boolean=false;
-  filteredProducts:IProduct[];
-  _listFilter : string;
+  pageTitle: string = "Product list";
+  imageWidth: number = 50;
+  imageMargin: number = 2;
+  showImage: boolean = false;
+  filteredProducts: IProduct[];
+  _listFilter: string;
+  products: IProduct[];
+  _productService: ProductService;
+  errorMessage: string;
 
   get listFilter(): string {
     return this._listFilter;
@@ -22,54 +25,43 @@ export class ProductsComponent implements OnInit {
 
   set listFilter(value: string) {
     this._listFilter = value;
-    this.filteredProducts=this.listFilter ?
-      this.performFilter(this.listFilter): this.products
+    this.filteredProducts = this.listFilter ?
+      this.performFilter(this.listFilter) : this.products
   }
 
 
-  products : IProduct[]= [{
-    "productId": 1,
-    "productName": "Leaf Rake",
-    "productCode": "GDN-0011",
-    "releaseDate": "March 19, 2016",
-    "description": "Leaf rake with 48-inch wooden handle.",
-    "price": 19.95,
-    "starRating": 3.2,
-    "imageUrl": "http://openclipart.org/image/300px/svg_to_png/26215/Anonymous_Leaf_Rake.png"
-  },
-    {
-      "productId": 2,
-      "productName": "Garden Cart",
-      "productCode": "GDN-0023",
-      "releaseDate": "March 18, 2016",
-      "description": "15 gallon capacity rolling garden cart",
-      "price": 32.99,
-      "starRating": 4.2,
-      "imageUrl": "http://openclipart.org/image/300px/svg_to_png/58471/garden_cart.png"
-    }];
+  constructor(productService: ProductService) {
+    this._productService = productService;
 
 
-
-  constructor() {
-    // this.filteredProducts=this.products
-    this.listFilter='';
   }
 
   ngOnInit() {
-    console.log('init product component')
+    console.log('init product component');
+    this._productService.getProducts().subscribe(
+      data => {this.products = data;
+        this.filteredProducts=data},
+      error =>this.errorMessage=<any>error
+
+    );
+
+    this.listFilter = '';
+
   }
-  toggleImage():void{
-    this.showImage=!this.showImage;
+
+  toggleImage(): void {
+    this.showImage = !this.showImage;
   }
-  performFilter(filterdBy:string):IProduct[]{
-    filterdBy=filterdBy.toLocaleLowerCase();
-    return this.products.filter((product:IProduct)=>
-      product.productName.toLocaleLowerCase().indexOf(filterdBy)!==-1
+
+  performFilter(filterdBy: string): IProduct[] {
+    filterdBy = filterdBy.toLocaleLowerCase();
+    return this.products.filter((product: IProduct) =>
+      product.productName.toLocaleLowerCase().indexOf(filterdBy) !== -1
     );
   }
 
-  onRatingClicked(message:string){
-    this.pageTitle='Product List '+message;
+  onRatingClicked(message: string) {
+    this.pageTitle = 'Product List ' + message;
   }
 
 }
