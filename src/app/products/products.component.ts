@@ -12,7 +12,7 @@ export class ProductsComponent implements OnInit {
   pageTitle: string = "Product list";
   imageWidth: number = 50;
   imageMargin: number = 2;
-  showImage: boolean = false;
+  showImage: boolean = true;
   filteredProducts: IProduct[];
   _listFilter: string;
   products: IProduct[];
