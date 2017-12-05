@@ -1,0 +1,38 @@
+ng new hello-world --prefix  hw
+ng serve -o
+ng test
+//running Karma test
+ng e2e // end to end test
+ng build  // deployment
+
+
+
+for production we need to minify the code  ,, tree shaking
+
+
+ng build --prod
+
+
+
+gn g cl class
+gn g c  component
+gn g m  module
+gn g d  directive
+gn g e  enum
+gn g g  guard
+gn g i  interface
+gn g p  pipe
+gn g s  service
+
+
+Angular is a platform
+-multiple languages (ES5 ,Typescript )
+-multiple templating sytaxes (html, xml)
+-multiple rendering  targets (Dom ,native)
+
+
+Mobile web
+-material design
+-angular universal
+-web workers
+
